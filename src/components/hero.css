@@ -1,0 +1,351 @@
+/* Landing hero — full-bleed photo split into depth layers, text block on the right.
+   Layer order: plate (blurred photo) → sharp photo → grade → neural net → text → Akash cut-out → floor fade → swarm. */
+
+.hx {
+  --pw: 133.333svh;
+  /* the photo is 4:3 at full viewport height */
+  --pl: calc(37vw - var(--focus) * var(--pw));
+  /* puts Akash's body at 37% of the screen width */
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.hx-scene {
+  position: absolute;
+  inset: 0;
+  animation: hx-push 3.4s var(--ease) both;
+  transform-origin: 40% 45%;
+}
+
+@keyframes hx-push {
+  from {
+    transform: scale(1.12);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+.hx-plate {
+  position: absolute;
+  inset: -6%;
+  background-position: center;
+  background-size: cover;
+  filter: blur(28px) brightness(.38) saturate(.8);
+}
+
+.hx-photo {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: var(--pw);
+  left: var(--pl);
+  pointer-events: none;
+}
+
+.hx-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: high-quality;
+}
+
+.hx-bg {
+  filter: brightness(.86) saturate(.92) contrast(1.05);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 62%, transparent 92%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 12%, #000 62%, transparent 92%);
+  animation: hx-fade 1.6s ease both;
+}
+
+.hx-fg {
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, rgba(0, 0, 0, .5) 80%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 60%, rgba(0, 0, 0, .5) 80%, transparent 100%);
+  animation: hx-fg 1.4s var(--ease) .2s both;
+}
+
+@keyframes hx-fg {
+  from {
+    opacity: 0;
+    filter: brightness(.2);
+  }
+
+  to {
+    opacity: 1;
+    filter: brightness(1.04) contrast(1.04);
+  }
+}
+
+@keyframes hx-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.hx-grade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(7, 7, 10, .96) 0%, rgba(7, 7, 10, .35) 28%, transparent 50%),
+    linear-gradient(to bottom, rgba(7, 7, 10, .55), transparent 20%),
+    linear-gradient(90deg, rgba(7, 7, 10, .25) 0%, transparent 25%, transparent 50%, rgba(7, 7, 10, .55) 75%, rgba(7, 7, 10, .7) 100%),
+    radial-gradient(45% 55% at 76% 48%, rgba(229, 19, 43, .22), transparent 70%);
+}
+
+.hx-net {
+  animation: hx-fade 2s ease .8s both;
+  -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 65%);
+  mask-image: linear-gradient(90deg, transparent 30%, #000 65%);
+}
+
+.hx-floor {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 26%;
+  pointer-events: none;
+  background: linear-gradient(to top, var(--color-ink) 6%, transparent);
+}
+
+/* text block — behind the cut-out, each line slides out from behind his shoulder */
+.hx-copy {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 60.5vw;
+  right: 4vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 40px;
+}
+
+.hx-slot {
+  overflow: hidden;
+  padding: 0 4px;
+}
+
+.hx-slot>* {
+  animation: hx-behind 1.1s var(--ease) both;
+}
+
+@keyframes hx-behind {
+  from {
+    transform: translateX(-108%);
+    opacity: 0;
+    filter: blur(6px);
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  to {
+    transform: none;
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.hx-name {
+  animation: hx-name .9s ease 2.05s both !important;
+}
+
+@keyframes hx-name {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+.hx-d3 {
+  animation-delay: 2.35s !important;
+}
+
+.hx-d4 {
+  animation-delay: 2.5s !important;
+}
+
+.hx-d5 {
+  animation-delay: 2.62s !important;
+}
+
+.hx-d6 {
+  animation-delay: 2.74s !important;
+}
+
+.hx-d7 {
+  animation-delay: 2.88s !important;
+}
+
+.hx-chip {
+  animation: hx-chip .8s var(--ease) both;
+}
+
+@keyframes hx-chip {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hx-late {
+  animation: hx-fade 1s ease 3.4s both;
+}
+
+.hx-swarm {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* phones and upright tablets — photo on top, the same text block underneath */
+@media (max-width: 1100px) and (orientation: portrait), (max-width: 767px) and (min-height: 501px) {
+
+  /* the corner chip and scroll hint belong to the side-by-side layout */
+  .hx-wide-only {
+    display: none !important;
+  }
+
+  .hx-copy {
+    max-width: 640px;
+  }
+
+
+  /* taller than the screen on phones so the photo and the text never overlap */
+  .hx {
+    --pw: 70svh;
+    --pl: calc(50vw - 0.6 * var(--pw));
+    height: auto;
+    min-height: calc(50svh + 520px);
+  }
+
+  .hx-photo {
+    top: 6svh;
+    height: 52svh;
+  }
+
+  .hx-bg {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 70%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 70%, transparent 100%);
+  }
+
+  .hx-fg {
+    -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 98%);
+    mask-image: linear-gradient(to bottom, #000 62%, transparent 98%);
+  }
+
+  .hx-grade {
+    background: linear-gradient(to top, rgba(7, 7, 10, 1) 0%, rgba(7, 7, 10, .85) 40%, transparent 62%), radial-gradient(70% 40% at 50% 30%, rgba(229, 19, 43, .25), transparent 70%);
+  }
+
+  .hx-net {
+    -webkit-mask-image: none;
+    mask-image: none;
+    opacity: .6;
+  }
+
+  .hx-copy {
+    left: 20px;
+    right: 20px;
+    top: auto;
+    bottom: 4svh;
+    justify-content: flex-end;
+    padding: 0;
+    z-index: 9 !important;
+  }
+
+  .hx-slot>* {
+    animation-name: hx-rise;
+  }
+
+  @keyframes hx-rise {
+    from {
+      transform: translateY(105%);
+      opacity: 0;
+      filter: blur(6px);
+    }
+
+    to {
+      transform: none;
+      opacity: 1;
+      filter: blur(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hx-scene,
+  .hx-bg,
+  .hx-fg,
+  .hx-net,
+  .hx-slot>*,
+  .hx-name,
+  .hx-chip,
+  .hx-late {
+    animation: none !important;
+  }
+}
+/* phones turned sideways — short screen, so tighten the text block to fit */
+@media (orientation: landscape) and (max-height: 500px) {
+  .hx {
+    min-height: 100svh;
+  }
+
+  .hx-copy {
+    left: 50vw;
+    padding-top: 48px;
+  }
+
+  .hx-name {
+    font-size: clamp(3rem, 17svh, 5rem) !important;
+  }
+
+  .hx-copy .hx-d4 {
+    margin-top: 8px;
+    font-size: 9px;
+    letter-spacing: .18em;
+  }
+
+  .hx-copy .hx-d5 {
+    margin-top: 6px;
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .hx-copy .hx-d6 {
+    display: none;
+  }
+
+  .hx-copy .hx-d7 {
+    margin-top: 12px;
+  }
+
+  .hx-copy .hx-d7 button {
+    min-height: 38px;
+  }
+
+  .hx-wide-only {
+    display: none !important;
+  }
+}
