@@ -7,7 +7,6 @@ import NeuralBackground from './components/NeuralBackground';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import EntryGate from './components/EntryGate';
-import WhatsAppButton from './components/WhatsAppButton';
 import Scene from './components/Scene';
 import About from './components/About';
 import Seasons from './components/Seasons';
@@ -80,7 +79,6 @@ function Series() {
         </main>
       </div>
 
-      {entered && <WhatsAppButton />}
       <AnimatePresence>{!entered && <EntryGate key="gate" onEnter={(withSound) => setEntered({ voice: withSound })} />}</AnimatePresence>
 
       <Suspense fallback={null}>

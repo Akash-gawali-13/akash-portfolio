@@ -32,11 +32,6 @@ export const profile = {
   location: 'Pune, Maharashtra',
   email: 'akashgawali736@gmail.com',
   /**
-   * WhatsApp number for the Contact section, with country code and no spaces or "+", e.g. '919876543210'.
-   * Leave empty ('') to hide the WhatsApp button.
-   */
-  whatsapp: '917350501320',
-  /**
    * Contact form: create a free form at https://formspree.io (sign in with your Gmail),
    * then paste its ID here, e.g. 'xyzabcd'. Messages arrive in your inbox.
    * Leave empty and the form opens the visitor's email app with the message filled in.

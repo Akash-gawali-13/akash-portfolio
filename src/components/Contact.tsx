@@ -2,7 +2,7 @@ import { useState, type FormEvent, type ReactNode } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { profile } from '../data/portfolio';
 import { sound } from '../lib/sound';
-import { EASE, Magnetic, SectionHeading } from './fx';
+import { EASE, SectionHeading } from './fx';
 
 /**
  * CONTACT — the end of the series: how to start a project.
@@ -12,13 +12,6 @@ import { EASE, Magnetic, SectionHeading } from './fx';
 type Fields = { name: string; email: string; message: string };
 const EMPTY: Fields = { name: '', email: '', message: '' };
 const SUBJECT = 'Portfolio enquiry';
-
-/** WhatsApp chat link with a ready-made first message ('' when no number is set). */
-export function whatsappLink() {
-  return profile.whatsapp
-    ? `https://wa.me/${profile.whatsapp}?text=${encodeURIComponent("Hi Akash, I found your portfolio and I'd like to discuss a project.")}`
-    : '';
-}
 
 export default function Contact() {
   const [f, setF] = useState<Fields>(EMPTY);
@@ -67,8 +60,6 @@ export default function Contact() {
     }
   }
 
-  const wa = whatsappLink();
-
   return (
     <>
       <SectionHeading
@@ -94,19 +85,6 @@ export default function Contact() {
             AI tools, dashboards, business websites or a training session for your team — share a few details and I&apos;ll come back with
             next steps, a timeline and a clear quote.
           </p>
-
-          {wa && (
-            <Magnetic className="mt-7 inline-block">
-              <a
-                href={wa}
-                target="_blank"
-                rel="noopener"
-                className="flex min-h-12 items-center gap-3 rounded-full bg-[#25D366] px-6 text-sm font-bold text-[#062b14] shadow-[0_0_40px_rgba(37,211,102,0.35)] transition hover:brightness-110"
-              >
-                <WhatsAppIcon /> Chat on WhatsApp
-              </a>
-            </Magnetic>
-          )}
 
           <ul className="mt-8 divide-y divide-white/10 border-y border-white/10">
             <Row k="Email">
@@ -237,13 +215,5 @@ function Row({ k, children }: { k: string; children: ReactNode }) {
       <span className="text-[11px] font-bold uppercase tracking-[0.24em] text-smoke">{k}</span>
       {children}
     </li>
-  );
-}
-
-export function WhatsAppIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.1-1.2l-.6-.3Z" />
-    </svg>
   );
 }
